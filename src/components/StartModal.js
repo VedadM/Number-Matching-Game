@@ -8,13 +8,13 @@ import {
 
 class Modal extends React.Component  {
     state = {
-        width: 0,
-        heigth: 0,
+        rows: 0,
+        cols: 0,
     }
 
     setFields = () => {
-        const { width, heigth } = this.state;
-        this.props.getValidParameters(true, width, heigth);
+        const { rows, cols } = this.state;
+        this.props.getValidParameters(true, rows, cols);
     }
 
     handleInput = (e, stateElement) => {
@@ -34,19 +34,19 @@ class Modal extends React.Component  {
             <Overlay>
                 <OverLayWindow>
                     <InnerBorder>
-                        <InputLabel>Enter grid width:</InputLabel>
+                        <InputLabel>Enter number of rows:</InputLabel>
                         <FullWidthInput 
                             placeholder="Enter Width"
-                            onChange={(e) => { this.handleInput(e, 'width') }}
-                            onFocus={() => {this.clearField('width')}}
-                            value={(Number.isInteger(this.state.width) && this.state.width > 0) ? this.state.width : ''}
+                            onChange={(e) => { this.handleInput(e, 'rows') }}
+                            onFocus={() => {this.clearField('rows')}}
+                            value={(Number.isInteger(this.state.rows) && this.state.rows > 0) ? this.state.rows : ''}
                         />
-                        <InputLabel>Enter grid height:</InputLabel>
+                        <InputLabel>Enter number of columns:</InputLabel>
                         <FullWidthInput 
                             placeholder="Enter Height"
-                            onChange={(e) => { this.handleInput(e, 'heigth') }}
-                            onFocus={() => {this.clearField('heigth')}}
-                            value={(Number.isInteger(this.state.heigth) && this.state.heigth > 0) ? this.state.heigth : ""}
+                            onChange={(e) => { this.handleInput(e, 'cols') }}
+                            onFocus={() => {this.clearField('cols')}}
+                            value={(Number.isInteger(this.state.cols) && this.state.cols > 0) ? this.state.cols : ""}
                         />
                         <FullButton 
                             onClick={this.setFields}

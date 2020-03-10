@@ -5,24 +5,24 @@ import Grid from './Grid';
 class App extends React.Component {
   state = {
     validParameters: false,
-    width: 0,
-    height: 0,
+    rows: 0,
+    cols: 0,
   }
 
-  getValidParameters = (isValid, w, h) => {
+  getValidParameters = (isValid, rows, cols) => {
     this.setState({
       validParameters: isValid,
-      width: w,
-      height: h,
+      rows,
+      cols,
     });
   }
 
   createGrid = () => {
-    const {width, height}  = this.state;
+    const { rows, cols }  = this.state;
     
     return (
       <div>
-        <Grid width={width} height={height} />
+        <Grid rows={rows} cols={cols} />
       </div>
     );
   }
