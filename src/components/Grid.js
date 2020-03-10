@@ -27,16 +27,15 @@ class Grid extends React.Component {
 
             elements.push(<Row
                 key={row}
-                id={cellID}
-                cols={cols}>
+                id={cellID}>
                     {columns}
                 </Row>);
         }
 
         return (
-            <React.Fragment>
+            <GameContainer cols={cols}>
                 { elements }
-            </React.Fragment>
+            </GameContainer>
         );
     } 
     render() {
@@ -53,6 +52,14 @@ export default Grid;
 
 const Row = styled.div`
   position: relative;
-  display: flex;
-  width: ${(props) => `${props.cols * WIDTHHEIGTH}px`};
 `;
+
+const GameContainer = styled.div`
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
+//width: ${(props) => `${props.cols * WIDTHHEIGTH}px`};

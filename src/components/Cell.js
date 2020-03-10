@@ -13,8 +13,8 @@ const Cell = props => {
 export default Cell;
 
 const CellBox = styled.div`
-    width: ${(props) => props.dimension}px;
-    height: ${(props) => props.dimension}px;
+    width: ${(props) => props.dimension - 4}px;
+    height: ${(props) => props.dimension - 4}px;
     display: inline-block;
     border: 1px solid gray;
     border-radius: 10px;
