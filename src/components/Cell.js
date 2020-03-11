@@ -2,10 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Cell = props => {
-    console.log(props);
     return (
         <CellBox dimension={props.dimension}>
-            Cell
+            <NumberBox>{props.values}</NumberBox>
         </CellBox>
     );
 }
@@ -19,4 +18,13 @@ const CellBox = styled.div`
     border: 1px solid gray;
     border-radius: 10px;
     margin: 2px;
+`;
+
+const NumberBox = styled.div`
+    position: relative;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-size: 15px;
 `;
