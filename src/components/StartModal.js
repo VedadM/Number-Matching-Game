@@ -4,16 +4,43 @@ import styled from 'styled-components';
 import {
     Button,
     Input,
+    Message,
 } from 'semantic-ui-react';
 
 class Modal extends React.Component  {
     state = {
         rows: 0,
         cols: 0,
+        errorMessage: '',
     }
 
     setFields = () => {
-        const { rows, cols } = this.state;
+        const {
+            rows,
+            cols,
+        } = this.state;
+
+        if (rows > 20 || cols > 20 ) {
+            this.setState({
+                errorMessage: 'Less or equal to 20, cause it is gonna chug if is is over'
+            });
+            return;
+        }
+
+        if (rows === 0 || cols ===  0) {
+            this.setState({
+                errorMessage: 'It is empty for the love of god, how can you match anything there'
+            });
+            return;
+        }
+
+        if (rows % 2 === 1 && cols % 2 === 1) {
+            this.setState({
+                errorMessage: 'Both fields being odd number will produce one extra field and we dont want that cause... well you know'
+            });
+            return;
+        }
+
         this.props.getValidParameters(true, rows, cols);
     }
 
@@ -25,15 +52,23 @@ class Modal extends React.Component  {
 
     clearField = (stateElement) => {
         this.setState({
-            [stateElement]: ''
+            [stateElement]: '',
+            errorMessage: '',
         })
     }
 
     render() {
+        const { errorMessage } = this.state;
+
         return ReactDOM.createPortal(
             <Overlay>
                 <OverLayWindow>
                     <InnerBorder>
+                        {!errorMessage ? ''
+                            : (<Message negative>
+                                {errorMessage}
+                            </Message>)
+                        }
                         <InputLabel>Enter number of rows:</InputLabel>
                         <FullWidthInput 
                             placeholder="Enter Width"
@@ -76,8 +111,7 @@ const Overlay = styled.div`
 `;
 
 const OverLayWindow = styled.div`
-    max-height: 300px;
-    height: 100%;
+    max-height: 360px;
     background-color: white;
     max-width: 500px;
     width: 100%;
