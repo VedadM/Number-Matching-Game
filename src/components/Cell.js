@@ -1,10 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const Cell = props => {
+    const [classname, flipElement] = useState('unflipped');
+    const {
+        dimension, 
+        flipField,
+        value,
+        row, 
+        col,
+    } = props;
+
+    useEffect(() => {
+        let flippedElement = {
+            row,
+            col,
+            classname,
+            value,
+        };
+
+        return () => flipField(flippedElement);
+      }, [classname, flipField]);
+
+    const toggleClass = () => {
+        (classname === 'unflipped') ? flipElement('flipped') : flipElement('unflipped');
+    }
+
     return (
-        <CellBox dimension={props.dimension}>
-            <NumberBox>{props.values}</NumberBox>
+        <CellBox
+            className={classname}
+            dimension={dimension}
+            onClick={toggleClass}
+        >
+            <NumberBox>{value}</NumberBox>
         </CellBox>
     );
 }
@@ -18,6 +46,17 @@ const CellBox = styled.div`
     border: 1px solid gray;
     border-radius: 10px;
     margin: 2px;
+    transition:transform 0.3s linear;
+    transform-style: preserve-3d;
+    transform: rotateY(180deg);
+
+    &.flipped {
+        transform: rotateY(0deg);
+    }
+
+    &.unflipped {
+        transform: rotateY(180deg);
+    }
 `;
 
 const NumberBox = styled.div`
@@ -27,4 +66,6 @@ const NumberBox = styled.div`
     justify-content: center;
     display: flex;
     font-size: 15px;
+    backface-visibility:hidden;
+    cursor: pointer;
 `;

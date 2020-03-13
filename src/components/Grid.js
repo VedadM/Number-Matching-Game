@@ -7,7 +7,8 @@ const WIDTHHEIGTH = 50;
 
 class Grid extends React.Component {
     state = {
-        playGrid: null
+        playGrid: null,
+        clickedElements: [],
     }
 
     componentDidMount() {
@@ -19,7 +20,7 @@ class Grid extends React.Component {
     
         // Create pair first
         for (let i = 0; i < 2; i++) {
-            numbers = new Set;
+            numbers = new Set();
             while (numbers.size < pairs) numbers.add(Math.floor(Math.random() * pairs));
     
             numberArray.push(...numbers)
@@ -31,7 +32,10 @@ class Grid extends React.Component {
             let tempColumns = [];
 
             for (let tempCol = 0; tempCol < cols; tempCol++) {
-                tempColumns.push({value: numberArray[counter]});
+                tempColumns.push({
+                    value: numberArray[counter],
+                    isFlipped: false,
+                });
                 counter++
             }
             playGrid.push(tempColumns);
@@ -48,7 +52,6 @@ class Grid extends React.Component {
         let elements = [];
 
         if (playGrid !== null) {
-            console.log('playGrid', playGrid[2][3])
             for (let row = 0; row < rows; row++) {
                 let columns = [];
                 let cellID = `row-${row}`;
@@ -60,7 +63,8 @@ class Grid extends React.Component {
                         id={elementId} 
                         col={col} 
                         row={row}
-                        values={playGrid[row][col].value}
+                        value={playGrid[row][col].value}
+                        flipField={this.flipField}
                         dimension={WIDTHHEIGTH}/>
                     );
                 }
@@ -78,7 +82,29 @@ class Grid extends React.Component {
                 { elements }
             </GameContainer>
         );
-    } 
+    }
+    
+    flipField = (el) => {
+        console.log(el);
+        let { playGrid, clickedElements } = this.state;
+        const { rows } =  this.props;
+
+        // if (el !== undefined)  {
+            this.setState({
+                playGrid: [...playGrid, (el.classname === 'flipped') ? 
+                    playGrid[el.row][el.col].isFlipped = true : 
+                    playGrid[el.row][el.col].isFlipped = false, 
+                    playGrid[el.row][el.col].value = el.value].slice(0, rows),
+                clickedElements: [...clickedElements, el],
+            }, () => this.checkValues());
+        // }
+    }
+
+    checkValues = () => {
+        console.log(this.state);
+        // console.log("???", this.state.clicledElements);
+    }
+
     render() {
         let grid = this.createGrid();
         return (
