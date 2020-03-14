@@ -64,6 +64,7 @@ class Grid extends React.Component {
                         col={col} 
                         row={row}
                         value={playGrid[row][col].value}
+                        isFlipped={playGrid[row][col].isFlipped}
                         flipField={this.flipField}
                         dimension={WIDTHHEIGTH}/>
                     );
@@ -85,24 +86,32 @@ class Grid extends React.Component {
     }
     
     flipField = (el) => {
-        console.log(el);
+        console.log('el', el);
         let { playGrid, clickedElements } = this.state;
         const { rows } =  this.props;
 
-        // if (el !== undefined)  {
-            this.setState({
-                playGrid: [...playGrid, (el.classname === 'flipped') ? 
-                    playGrid[el.row][el.col].isFlipped = true : 
-                    playGrid[el.row][el.col].isFlipped = false, 
-                    playGrid[el.row][el.col].value = el.value].slice(0, rows),
-                clickedElements: [...clickedElements, el],
-            }, () => this.checkValues());
-        // }
+        this.setState({
+            playGrid: [...playGrid, (el.flip) ? 
+                playGrid[el.row][el.col].isFlipped = true : 
+                playGrid[el.row][el.col].isFlipped = false, 
+                playGrid[el.row][el.col].value = el.value].slice(0, rows),
+            clickedElements: [...clickedElements, el],
+        }, () => this.checkValues());
     }
 
     checkValues = () => {
-        console.log(this.state);
-        // console.log("???", this.state.clicledElements);
+        const { clickedElements } = this.state;
+        console.log('before', clickedElements);
+        if (clickedElements.length === 2) {
+            console.log("Two Elements")
+        }
+
+        if (clickedElements.length === 3) {
+            this.setState({
+                clickedElements: [...clickedElements.slice(2)]
+            }, () => {console.log(clickedElements)})
+            // console.log("Three Elements")
+        }
     }
 
     render() {

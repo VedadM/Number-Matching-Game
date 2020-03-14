@@ -1,36 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Cell = props => {
-    const [classname, flipElement] = useState('unflipped');
     const {
         dimension, 
         flipField,
         value,
         row, 
         col,
+        isFlipped,
     } = props;
 
-    useEffect(() => {
+    const updateGrid = () => {
         let flippedElement = {
             row,
             col,
-            classname,
             value,
+            flip: !isFlipped
         };
 
-        return () => flipField(flippedElement);
-      }, [classname, flipField]);
-
-    const toggleClass = () => {
-        (classname === 'unflipped') ? flipElement('flipped') : flipElement('unflipped');
+        flipField(flippedElement)
     }
 
     return (
         <CellBox
-            className={classname}
+            className={(isFlipped) ? 'flipped' : 'unflipped'}
             dimension={dimension}
-            onClick={toggleClass}
+            onClick={updateGrid}
         >
             <NumberBox>{value}</NumberBox>
         </CellBox>
