@@ -100,17 +100,22 @@ class Grid extends React.Component {
     }
 
     checkValues = () => {
-        const { clickedElements } = this.state;
-        console.log('before', clickedElements);
-        if (clickedElements.length === 2) {
-            console.log("Two Elements")
-        }
+        const { rows } = this.props;
+        const { clickedElements, playGrid } = this.state;
 
         if (clickedElements.length === 3) {
-            this.setState({
-                clickedElements: [...clickedElements.slice(2)]
-            }, () => {console.log(clickedElements)})
-            // console.log("Three Elements")
+            if (clickedElements[0].value !== clickedElements[1].value) {
+                this.setState({
+                    playGrid: [...playGrid,
+                        playGrid[clickedElements[0].row][clickedElements[0].col].isFlipped = false,
+                        playGrid[clickedElements[1].row][clickedElements[1].col].isFlipped = false].slice(0, rows),
+                    clickedElements: [...clickedElements.slice(2)],
+                });
+            } else {
+                this.setState({
+                    clickedElements: [...clickedElements.slice(2)],
+                });
+            }
         }
     }
 

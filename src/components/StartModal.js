@@ -27,7 +27,7 @@ class Modal extends React.Component  {
             return;
         }
 
-        if (rows === 0 || cols ===  0) {
+        if (rows === 0 || cols === 0  || cols === null || rows === null) {
             this.setState({
                 errorMessage: 'It is empty for the love of god, how can you match anything there'
             });

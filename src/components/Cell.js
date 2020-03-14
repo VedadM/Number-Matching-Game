@@ -12,14 +12,16 @@ const Cell = props => {
     } = props;
 
     const updateGrid = () => {
-        let flippedElement = {
-            row,
-            col,
-            value,
-            flip: !isFlipped
-        };
-
-        flipField(flippedElement)
+        if (!isFlipped) {
+            let flippedElement = {
+                row,
+                col,
+                value,
+                flip: !isFlipped
+            };
+            
+            flipField(flippedElement)
+        }
     }
 
     return (
