@@ -135,6 +135,7 @@ class Grid extends React.Component {
 
     render() {
         let grid = this.createGrid();
+        const { resetGame } = this.props;
         const { clicks, matches } = this.state;
 
         return (
@@ -144,6 +145,9 @@ class Grid extends React.Component {
                     clicks={clicks}
                     matches={matches}
                 />
+                <ResetBox onClick={resetGame}>
+                    Reset Game
+                </ResetBox>
             </React.Fragment>
         );
     }
@@ -161,4 +165,8 @@ const GameContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+`;
+
+const ResetBox = styled.div`
+    text-align: center;
 `;

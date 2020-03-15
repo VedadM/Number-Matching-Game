@@ -19,6 +19,14 @@ class App extends React.Component {
     });
   }
 
+  resetGame = () => {
+    this.setState({
+      validParameters: false,
+      rows: 0,
+      cols: 0,
+    }); 
+  }
+
   createGrid = () => {
     const { rows, cols }  = this.state;
     
@@ -27,7 +35,11 @@ class App extends React.Component {
         <GameHeader>
           Vedad's Matching Game
         </GameHeader>
-        <Grid rows={rows} cols={cols} />
+        <Grid
+          rows={rows}
+          cols={cols}
+          resetGame={this.resetGame}
+        />
       </div>
     );
   }
