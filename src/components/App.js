@@ -1,4 +1,6 @@
 import React from 'react';
+import styled from 'styled-components';
+
 import StartModal from  './StartModal';
 import Grid from './Grid';
 
@@ -22,6 +24,9 @@ class App extends React.Component {
     
     return (
       <div>
+        <GameHeader>
+          Vedad's Matching Game
+        </GameHeader>
         <Grid rows={rows} cols={cols} />
       </div>
     );
@@ -45,3 +50,11 @@ class App extends React.Component {
 }
 
 export default App;
+
+const GameHeader = styled.div`
+  text-align: center;
+  font-size: 25px;
+  display: flex;
+  margin: 15px 15px;
+  justify-content: center;
+`;

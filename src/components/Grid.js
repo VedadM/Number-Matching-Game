@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import React from 'react';
 import Cell from './Cell';
+import ScoreBoard from './ScoreBoard';
 
 const WIDTHHEIGTH = 50;
 
@@ -9,6 +10,8 @@ class Grid extends React.Component {
     state = {
         playGrid: null,
         clickedElements: [],
+        matches: 0,
+        clicks: 0,
     }
 
     componentDidMount() {
@@ -86,7 +89,6 @@ class Grid extends React.Component {
     }
     
     flipField = (el) => {
-        console.log('el', el);
         let { playGrid, clickedElements } = this.state;
         const { rows } =  this.props;
 
@@ -101,7 +103,12 @@ class Grid extends React.Component {
 
     checkValues = () => {
         const { rows } = this.props;
-        const { clickedElements, playGrid } = this.state;
+        const {
+            clickedElements, 
+            playGrid,
+            matches,
+            clicks,
+        } = this.state;
 
         if (clickedElements.length === 3) {
             if (clickedElements[0].value !== clickedElements[1].value) {
@@ -110,10 +117,17 @@ class Grid extends React.Component {
                         playGrid[clickedElements[0].row][clickedElements[0].col].isFlipped = false,
                         playGrid[clickedElements[1].row][clickedElements[1].col].isFlipped = false].slice(0, rows),
                     clickedElements: [...clickedElements.slice(2)],
+                }, () => { 
+                    this.setState({ clicks: clicks + 1 }) 
                 });
             } else {
                 this.setState({
-                    clickedElements: [...clickedElements.slice(2)],
+                    clickedElements: [...clickedElements.slice(2)], 
+                }, () => { 
+                    this.setState({
+                        matches: matches + 1,
+                        clicks: clicks + 1,
+                    })
                 });
             }
         }
@@ -121,9 +135,15 @@ class Grid extends React.Component {
 
     render() {
         let grid = this.createGrid();
+        const { clicks, matches } = this.state;
+
         return (
             <React.Fragment>
                 {grid}
+                <ScoreBoard 
+                    clicks={clicks}
+                    matches={matches}
+                />
             </React.Fragment>
         );
     }
@@ -142,5 +162,3 @@ const GameContainer = styled.div`
     justify-content: center;
     align-items: center;
 `;
-
-//width: ${(props) => `${props.cols * WIDTHHEIGTH}px`};
