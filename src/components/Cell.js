@@ -9,6 +9,7 @@ const Cell = props => {
         row, 
         col,
         isFlipped,
+        matched,
     } = props;
 
     const updateGrid = () => {
@@ -28,6 +29,7 @@ const Cell = props => {
         <CellBox
             className={(isFlipped) ? 'flipped' : 'unflipped'}
             dimension={dimension}
+            matched={matched}
             onClick={updateGrid}
         >
             <NumberBox>{value}</NumberBox>
@@ -44,9 +46,10 @@ const CellBox = styled.div`
     border: 1px solid gray;
     border-radius: 10px;
     margin: 2px;
-    transition:transform 0.3s linear;
+    transition: all 0.3s linear;
     transform-style: preserve-3d;
     transform: rotateY(180deg);
+    background-color: ${(props) => (props.matched) ? 'grey' : 'white' };
 
     &.flipped {
         transform: rotateY(0deg);

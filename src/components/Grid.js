@@ -38,6 +38,7 @@ class Grid extends React.Component {
                 tempColumns.push({
                     value: numberArray[counter],
                     isFlipped: false,
+                    matched: false,
                 });
                 counter++
             }
@@ -50,8 +51,12 @@ class Grid extends React.Component {
     }
 
     createGrid = () => {
-        const { rows, cols } = this.props;
-        const { playGrid } = this.state;
+        const {
+            rows,
+            cols
+        } = this.props;
+
+        const {playGrid } = this.state;
         let elements = [];
 
         if (playGrid !== null) {
@@ -69,6 +74,7 @@ class Grid extends React.Component {
                         value={playGrid[row][col].value}
                         isFlipped={playGrid[row][col].isFlipped}
                         flipField={this.flipField}
+                        matched={playGrid[row][col].matched}
                         dimension={WIDTHHEIGTH}/>
                     );
                 }
@@ -122,6 +128,9 @@ class Grid extends React.Component {
                 });
             } else {
                 this.setState({
+                    playGrid: [...playGrid,
+                        playGrid[clickedElements[0].row][clickedElements[0].col].matched = true,
+                        playGrid[clickedElements[1].row][clickedElements[1].col].matched = true].slice(0, rows),
                     clickedElements: [...clickedElements.slice(2)], 
                 }, () => { 
                     this.setState({
